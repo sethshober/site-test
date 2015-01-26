@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/sethshober/site-test",
   "dependencies": {
-    "static-site-generator": "https://github.com/sethshober/static-site-generator"
+    "static-site-generator": "git+https://github.com/sethshober/static-site-generator"
   }
 }
