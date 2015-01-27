@@ -1,7 +1,10 @@
 var app = require('static-site-generator');
+var path = require('path');
 
-app.public(__dirname + "/public");
+app.publicFiles(path.join( __dirname + "/public") );
 
-app.postDirectory = __dirname + '/posts/';
+app.postDirectory = path.join(__dirname + '/posts');
+
+app.init();
 
 module.exports = app;
