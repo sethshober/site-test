@@ -5,6 +5,7 @@ var postContent = document.getElementById('postTextArea');
 var postButton = document.getElementById('addPostDisabled');
 var postList = document.getElementById('postList');
 var saving = false;
+var postNum = 10;
 
 
 
@@ -127,11 +128,45 @@ function init () {
 }
 
 
+// AJAX TO LOAD MORE POSTS
+function getMorePosts () {
+	var postUrl = "http://localhost:3000/posts/";
+	var postReq = new XMLHttpRequest();
+	var postButton = document.getElementById('getPostsButton');
+	var postList = document.getElementById('postList');
+	//postButton.setAttribute('disabled', true);
+	//postButton.value = "Loading...";
+	postReq.onreadystatechange = function() {
+
+	  var posts;
+	  if (postReq.readyState == 4 && postReq.status == 200) {
+	    
+	    posts = JSON.parse(postReq.responseText);
+	    console.log(posts);
+	    for ( var i = 0; i < posts.length; i++ ) {
+	    	postList.innerHTML += posts[i];
+	    }
+	    
+	    postNum += 10;
+	    console.log(postNum);
+	    
+	  }
+
+	}
+	postReq.open("GET", postUrl + postNum , true);
+	postReq.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	postReq.send();
+	//postButton.setAttribute('disabled', false);
+	//postButton.value = "Load More";
+}
+
+
 // EVENT LISTENERS
 
 postButton.addEventListener('click', addPost, false);
 postContent.addEventListener('input', buttonEnable, false);
 postContent.addEventListener('blur', stopSave, false);
+getPostsButton.addEventListener('click', getMorePosts, false);
 
 
 
